@@ -24,11 +24,11 @@ RUN chown -R crucible: /opt/atlassian/crucible
 # Setup Crucible data directory in environment
 RUN echo 'FISHEYE_INST="/opt/atlassian/crucible/data"' >> /etc/environment
 
-# Copy Crucible configuration file to data directory
-ADD config.xml /config.xml
-RUN cp /config.xml /opt/atlassian/crucible/data/
+# Create a configuration link to crucible config from a configuration container
 RUN rm -f /opt/atlassian/crucible/current/config.xml
-RUN ln -s /opt/atlassian/crucible/data/config.xml /opt/atlassian/crucible/current/config.xml
+RUN mkdir -p /config
+RUN touch /config/config.xml
+RUN ln -s /config/config.xml /opt/atlassian/crucible/current/config.xml
 
 ADD scripts /scripts
 
