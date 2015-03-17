@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [ ! -f /crucible.PID ]; then
+    echo "Starting Crucible..."
+    /scripts/crucible start
+fi

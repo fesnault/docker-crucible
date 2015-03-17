@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config control-bind="127.0.0.1:8059" version="1.0" admin-hash="21232F297A57A5A743894A0E4A801FC3">
+    <!-- see example-config.xml and config.xsd for more documentation -->
+    <license SID="B44I-EAM2-HEA9-H5S8">
+        <crucible>oOpnMRAjbSonCpwPaCKUkEBgppsjGTwsvXiaMnoojXVtDQ
+mi2K9LTUPsuK1Drm7EP9Jyrh2KwCrTUznIFq1LpkRnrrpq
+QQoMWsRooqqNMqpQRnOSvoQPpRmQPqRRPrSxwvwxSxxrnN
+nnrmUUnpvtsrsummmmmUUnpvtsrsummmmmUUFsvhXUUnmm</crucible>
+        <fisheye>Disabled</fisheye>
+    </license>
+    <web-server>
+        <http bind=":8060" />
+    </web-server>
+    <security allow-anon="true" allow-cru-anon="true">
+        <built-in>
+            <signup enabled="true" />
+        </built-in>
+        <admins>
+            <system-admins />
+        </admins>
+        <avatar>
+            <disabled />
+        </avatar>
+    </security>
+    <repository-defaults>
+        <linker />
+        <allow />
+        <tarball enabled="false" maxFileCount="0" />
+        <security allow-anon="true" allow-logged-in="false">
+            <required-groups />
+        </security>
+        <text-indexer enabled="true" />
+        <watches enabled="true" />
+        <commit-message-syntax syntax="plain" />
+        <changeset-discussions enabled="true" />
+        <show-checkout-url>true</show-checkout-url>
+    </repository-defaults>
+    <check-for-updates />
+    <database type="postgresql">
+        <connection dialect="org.hibernate.dialect.PostgreSQLDialect" driver="org.postgresql.Driver" jdbcurl="jdbc:postgresql://db:5432/crucible" password="crucible" username="crucible" maxPoolSize="20" minPoolSize="5" driverSource="bundled" />
+    </database>
+    <snippet />
+</config>
