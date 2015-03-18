@@ -1,6 +1,7 @@
 #!/bin/bash
 
 if [ ! -f /crucible.PID ]; then
+    cp /config/config.xml /opt/atlassian/crucible/data/config.xml
     chown -R crucible: /opt/atlassian/crucible/data
     echo "Starting Crucible..."
     /scripts/crucible start
