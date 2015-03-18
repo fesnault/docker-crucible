@@ -5,6 +5,15 @@ MAINTAINER Frederic Esnault <esnault.frederic@gmail.com>
 ENV APPLICATION crucible
 ENV VERSION 3.7.0
 
+ADD scripts /scripts
+
+# Install PostgreSQL client
+RUN apt-get -y -qq install postgresql-client
+
+# Initialize Crucible database if not present
+RUN chmod +x /scripts/init-db.sh
+RUN /scripts/init-db.sh
+
 # Download and unpack Application
 RUN mkdir -p /opt/atlassian/crucible
 ADD http://www.atlassian.com/software/crucible/downloads/binary/$APPLICATION-$VERSION.zip /opt/atlassian/crucible/archive.zip
@@ -30,7 +39,6 @@ RUN mkdir -p /config
 RUN touch /config/config.xml
 RUN ln -s /config/config.xml /opt/atlassian/crucible/current/config.xml
 
-ADD scripts /scripts
 
 # Add daemon to be run by runit.
 RUN mkdir /etc/service/crucible
