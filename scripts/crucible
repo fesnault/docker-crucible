@@ -1,17 +1,26 @@
 #!/bin/bash
- 
+set +x 
 # Initialize database if not present
 PSQL_IP=$DB_PORT_5432_TCP_ADDR
 PSQL_PORT=$DB_PORT_5432_TCP_PORT
 echo "$PSQL_IP:*:$DB_ENV_DB:$DB_ENV_DBUSER:$DB_ENV_DBPASS" > $HOME/.pgpas
 
-CDB_EXISTS=`PGPASSWORD="$DB_ENV_DBPASS" psql -h $PSQL_IP -p $PSQL_PORT -U $DB_ENV_DBUSER -w -l | grep crucible | wc -l`
+RETURN=1
+while [ $RETURN -gt 0 ]
+do
+  echo "Waiting for database..."
+  sleep 1;
+  CDB_EXISTS=`PGPASSWORD="$DB_ENV_DBPASS" psql -h $PSQL_IP -p $PSQL_PORT -U $DB_ENV_DBUSER -w -l 2>&1 | grep crucible | wc -l`
+  RETURN=$?
+done
+
 if [ $CDB_EXISTS -eq 0 ]; then
         echo "
         CREATE ROLE crucible WITH LOGIN PASSWORD 'crucible' VALID UNTIL 'infinity';
         CREATE DATABASE crucible WITH ENCODING='UTF8' OWNER=crucible TEMPLATE=template0 CONNECTION LIMIT=-1;" \
         | PGPASSWORD="$DB_ENV_DBPASS" psql -h $PSQL_IP -p $PSQL_PORT -d $DB_ENV_DB -U $DB_ENV_DBUSER -w
 fi
+
 
 # Make config link belong to crucible
 chown crucible: /opt/atlassian/crucible/current/config.xml
