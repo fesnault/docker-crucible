@@ -14,6 +14,9 @@ do
   RETURN=$?
 done
 
+# Import crowd.crt into java cacerts
+keytool --import --file /config/crowd.crt --alias crowd.ovyka.com --keystore /usr/lib/jvm/java-7-oracle/jre/lib/security/cacerts --storepass changeit --noprompt 2>&1 > /dev/null
+
 if [ $CDB_EXISTS -eq 0 ]; then
         echo "
         CREATE ROLE crucible WITH LOGIN PASSWORD 'crucible' VALID UNTIL 'infinity';
