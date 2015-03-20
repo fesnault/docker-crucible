@@ -1,4 +1,4 @@
-FROM fesnault/atlassian-base:latest
+FROM registry.ovyka.com/atlassian-base:latest
 MAINTAINER Frederic Esnault <esnault.frederic@gmail.com>
 
 # Setup environment variables
